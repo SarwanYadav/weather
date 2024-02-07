@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/merriweathersans_regular"
-        android:text="Max : 00:00 °C"
+        android:text="Max :  00:00 °C"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.703"
+        app:layout_constraintHorizontal_bias="0.712"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weater" />
 
@@ -57,7 +57,7 @@
 
     <TextView
         android:id="@+id/cityName"
-        android:layout_width="82dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/loctaion"
@@ -85,7 +85,7 @@
         android:id="@+id/temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/merriweathersans_bold"
         android:text="00:00 0°C"
         android:textColor="@color/black"
@@ -105,7 +105,7 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.72"
         app:layout_constraintStart_toStartOf="@+id/lottieAnimationView"
         app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView" />
 
@@ -140,7 +140,6 @@
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/merriweathersans_regular"
         android:text="03-02-2024"
         android:textColor="@color/black"
@@ -154,7 +153,7 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="34dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/background_shape"

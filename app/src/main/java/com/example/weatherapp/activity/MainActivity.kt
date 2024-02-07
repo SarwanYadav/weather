@@ -23,6 +23,7 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
+
     private lateinit var binding: ActivityMainBinding
 
 
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
 
     // Add SearchView funcation work
+
 
     private fun SearchCity() {
         val searchView = binding.searchView
