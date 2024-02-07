@@ -1,9 +1,12 @@
 package com.example.weatherapp.activity
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.example.weatherapp.MyInterfaces.ApiInterfaces
+import com.example.weatherapp.R
 import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.model.WeatherApp
 import retrofit2.Call
@@ -32,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         SearchCity()
     }
 
+
+    // Add SearchView funcation work
+
     private fun SearchCity() {
         val searchView = binding.searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
@@ -55,6 +61,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    // create method get data and call APi use retrofit
+
     private fun featWeaterData(cityName: String) {
 
 
@@ -74,27 +82,29 @@ class MainActivity : AppCompatActivity() {
                     val temperature = responseBody.main.temp.toString()
                     val humidity = responseBody.main.humidity
                     val windSpeed = responseBody.wind.speed
-                    val Sunrise = responseBody.sys.sunrise
-                    val sunset = responseBody.sys.sunset
+                    val Sunrise = responseBody.sys.sunrise.toLong()
+                    val sunset = responseBody.sys.sunset.toLong()
                     val sealevel = responseBody.main.pressure
                     val max = responseBody.main.temp_max
                     val min = responseBody.main.temp_min
-                    val Conditions = responseBody.weather.firstOrNull()?.main ?: "unknow"
+                    val condition = responseBody.weather.firstOrNull()?.main ?: "unknow"
 
 
                     // binding data
 
                     binding.temp.text = "$temperature °C"
-                    binding.weater.text = Conditions
+                    binding.weater.text = condition
                     binding.max.text = "Max Temp: $max °C"
                     binding.min.text = "Min Temp : $min°C"
                     binding.Humidity.text = "$humidity"
                     binding.windSpeed.text = "$windSpeed"
-                    binding.Sunrise.text = "$Sunrise"
-                    binding.sunset.text = "$sunset"
+                    binding.Sunrise.text = "${time(Sunrise)}"
+                    binding.sunset.text = "${time(sunset)}"
                     binding.sealevel.text = "$sealevel hPa"
-                    binding.condition.text = Conditions
+                    binding.condition.text = "condition"
 
+
+                    // set Date and day
 
                     binding.day.text = dayName(System.currentTimeMillis())
                     binding.date.text = date()
@@ -105,31 +115,81 @@ class MainActivity : AppCompatActivity() {
 //                   Log.d("TAG", "onResponse: $temperature")
 
 
+                    changeImageAccordingToweatherCondition(condition)
+
                 }
             }
 
             override fun onFailure(call: Call<WeatherApp?>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d(TAG, "Fail!")
+
+
             }
         })
 
 
     }
 
-    private fun date(): String {
-        val sdf = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-        return sdf.format((Date()))
 
+    private fun changeImageAccordingToweatherCondition(condition: String) {
+
+        when (condition) {
+            "Clear Sky", "Sunny", "Clear" -> {
+                binding.root.setBackgroundColor(R.drawable.sunny_background)
+                binding.lottieAnimationView.setAnimation(R.raw.sun)
+
+            }
+
+            "Party Clouds", "Clouds", "Overcast", "Mist", "Foggy" -> {
+
+                binding.root.setBackgroundColor(R.drawable.rain_background)
+                binding.lottieAnimationView.setAnimation(R.raw.rain)
+
+            }
+
+
+            "Ligt Snow", "Moderate Snow", "Heavy Snow", "Blizzard" -> {
+                binding.root.setBackgroundColor(R.drawable.snow_background)
+                binding.lottieAnimationView.setAnimation(R.raw.snow)
+            }
+
+            else -> {
+                binding.root.setBackgroundColor(R.drawable.sunny_background)
+                binding.lottieAnimationView.setAnimation(R.raw.sun)
+            }
+
+
+        }
+
+
+
+        binding.lottieAnimationView.playAnimation()
     }
-
-    fun dayName(timestamp: Long): String {
-        val sdf = SimpleDateFormat("EEEE", Locale.getDefault())
-        return sdf.format((Date()))
-
-    }
-
 
 }
+
+
+private fun date(): String {
+    val sdf = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+    return sdf.format((Date()))
+
+}
+
+private fun time(timestamp: Long): String {
+    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return sdf.format((Date(timestamp * 1000)))
+
+}
+
+
+fun dayName(timestamp: Long): String {
+    val sdf = SimpleDateFormat("EEEE", Locale.getDefault())
+    return sdf.format((Date()))
+
+}
+
+
+
 
 
 
